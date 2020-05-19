@@ -1,6 +1,6 @@
 {
-  "short_name": "react-custom-hooks",
-  "name": "react-custom-hooks",
+  "short_name": "use-axios-get-hook-example",
+  "name": "use-axios-get-hook-example",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
