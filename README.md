@@ -2,7 +2,7 @@
 
 > React custom hook for using Axios fetch call
 
-[![NPM](https://img.shields.io/npm/v/@sgovil/use-axios-get-hook)](https://www.npmjs.com/package/use-axios-get-hook)
+[![NPM](https://img.shields.io/npm/v/use-axios-get-hook)](https://www.npmjs.com/package/use-axios-get-hook)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![demo site](https://img.shields.io/badge/demo-site-green)](https://sumgwork.github.io/use-axios-get-hook/)
 
