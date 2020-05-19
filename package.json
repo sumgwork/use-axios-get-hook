@@ -1,6 +1,6 @@
 {
   "name": "use-axios-get-hook",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Efficient and powerful custom react hook for using Axios get api",
   "author": {
     "name": "Sumit Govil",
