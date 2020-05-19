@@ -1,0 +1,11 @@
+node_modules
+src
+example
+.env
+.babelrc
+.editorconfig
+.eslintrc
+.gitignore
+.travis.yml
+rollup.config.js
+yarn.lock
