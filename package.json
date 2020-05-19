@@ -28,8 +28,8 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
+    "predeploy": "cd use-axios-get-hook-example && yarn install && yarn run build",
+    "deploy": "gh-pages -d use-axios-get-hook-example/build",
     "debug": "NODE_DEBUG=gh-pages npm run deploy"
   },
   "peerDependencies": {
