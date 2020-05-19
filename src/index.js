@@ -8,21 +8,33 @@ const useAxiosGet = (
     dependencyParams: [],
     processor: (value) => value,
     outputData: undefined, //used for caching the response
+    handler: axios,
+    config: {},
+    fetchLatency: 0,
   }
 ) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { dependencyParams, abortCondition, processor, outputData } = options;
+  const {
+    config,
+    dependencyParams,
+    abortCondition,
+    processor,
+    outputData,
+    handler,
+    fetchLatency,
+  } = options;
+
   useEffect(() => {
+    const axiosHandler = handler || axios;
     if (!!outputData) {
       setResponse(outputData);
     } else if (!abortCondition) {
       const fetchData = async () => {
-        setIsLoading(true);
         try {
-          const res = await axios.get(url);
+          const res = await axiosHandler.get(url, config);
           const json = res.data;
 
           if (res.status !== 200) {
@@ -41,7 +53,10 @@ const useAxiosGet = (
           setIsLoading(false);
         }
       };
-      fetchData();
+      setIsLoading(true);
+      setTimeout(() => {
+        fetchData();
+      }, fetchLatency || 0);
     }
   }, [abortCondition, ...(dependencyParams || [])]);
   return [response, error, isLoading];
