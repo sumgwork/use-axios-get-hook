@@ -1,3 +1,7 @@
+/* eslint-disable no-extra-boolean-cast */
+/* eslint-disable comma-dangle */
+/* eslint-disable quotes */
+/* eslint-disable semi */
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -7,10 +11,11 @@ const useAxiosGet = (
     abortCondition: false,
     dependencyParams: [],
     processor: (value) => value,
-    outputData: undefined, //used for caching the response
+    outputData: undefined, // used for caching the response
     handler: axios,
     config: {},
     fetchLatency: 0,
+    shouldHandleNextUrl: false,
   }
 ) => {
   const [response, setResponse] = useState(null);
@@ -25,6 +30,7 @@ const useAxiosGet = (
     outputData,
     handler,
     fetchLatency,
+    shouldHandleNextUrl,
   } = options;
 
   useEffect(() => {
@@ -35,13 +41,28 @@ const useAxiosGet = (
       const fetchData = async () => {
         try {
           const res = await axiosHandler.get(url, config);
-          const json = res.data;
-
+          let json = res.data;
           if (res.status !== 200) {
             if (json.errors) {
               throw new Error(Object.values(json.errors));
             } else {
               throw new Error("Error occured with API call");
+            }
+          }
+
+          if (shouldHandleNextUrl && json.results && json.next) {
+            while (json.next) {
+              const resInner = await axiosHandler.get(json.next, config);
+              const jsonInner = resInner.data;
+              if (resInner.status !== 200) {
+                if (jsonInner.errors) {
+                  throw new Error(Object.values(jsonInner.errors));
+                } else {
+                  throw new Error("Error occured with API call");
+                }
+              }
+              jsonInner.results = [...json.results, ...jsonInner.results];
+              json = jsonInner;
             }
           }
           if (processor) {
@@ -58,6 +79,7 @@ const useAxiosGet = (
         fetchData();
       }, fetchLatency || 0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [abortCondition, ...(dependencyParams || [])]);
   return [response, error, isLoading];
 };

@@ -30,7 +30,8 @@
     "prepare": "yarn run build",
     "predeploy": "cd use-axios-get-hook-example && yarn install && yarn run build",
     "deploy": "gh-pages -d use-axios-get-hook-example/build",
-    "debug": "NODE_DEBUG=gh-pages npm run deploy"
+    "debug": "NODE_DEBUG=gh-pages npm run deploy",
+    "pub": "npm run build && git add . && git commit -m \"Updates\" && npm version patch && npm publish"
   },
   "peerDependencies": {
     "axios": "^0.19.2",
